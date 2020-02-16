@@ -3,10 +3,23 @@
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
             [io.pedestal.interceptor.helpers :refer [definterceptor defhandler]]
+            [clj-http.client :as client]
             [ring.util.response :as ring-resp]
+            [clojure.data.json :as json]
             [monger.core :as mg]
             [monger.collection :as mc]
             [monger.json]))
+
+
+(defn git-search [q]
+  (let [ret (client/get
+              (format "https://api.github.com/search/repositories?q=%s+language:clojure" q) {:accept :json})]
+    (json/read-str (ret :body))))
+
+(defn git-get
+  [request]
+  (http/json-response (git-search (get-in request [:query-params :q]))))
+
 
 
 (defn about-page
@@ -50,6 +63,7 @@
         (assoc (ring-resp/response {:body "access denied"}) :status 403))))
 
 
+
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}
 ;; apply to / and its children (/about).
@@ -60,7 +74,8 @@
               ["/about" :get (conj common-interceptors `about-page)]
               ["/projects" :get (conj common-interceptors `get-projects)]
               ["/project/:proj-name" :get (conj common-interceptors `get-project)]
-              ["/project" :post (conj common-interceptors `create-project)]})
+              ["/project" :post (conj common-interceptors `create-project)]
+              ["/see-also" :get (conj common-interceptors `git-get)]})
 
 
 
