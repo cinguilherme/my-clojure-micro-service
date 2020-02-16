@@ -86,13 +86,25 @@
         connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)]
     (ring-resp/created "the url" (mc/insert-and-return db "catalog" incoming))))
 
+(defn xml-out
+  [known-map]
+  (xml/element :project {}
+               (xml/element :_id {} (.toString (:_id known-map)))
+               (xml/element :proj-name {} (:proj-name known-map))
+               (xml/element :name {} (:name known-map))
+               (xml/element :frame-work {} (:frame-work known-map))
+               (xml/element :repo {} (:repo known-map))
+               (xml/element :language {} (:language known-map))))
+
 (defn create-project-xml
   [request]
   (def incoming
     (monger-mapper
       (slurp (:body request))))
-  (let [connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)]
-    (ring-resp/created "the url" (mc/insert-and-return db "catalog" incoming))))
+  (let [connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)
+        ok (mc/insert-and-return db "catalog" incoming)]
+    (-> (ring-resp/created "http to my resource" (xml/emit-str (xml-out ok)))
+        (ring-resp/content-type "application/xml"))))
 
 
 
