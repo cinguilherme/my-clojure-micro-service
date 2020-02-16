@@ -2,6 +2,7 @@
   (:require [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
+            [io.pedestal.interceptor.helpers :refer [definterceptor defhandler]]
             [ring.util.response :as ring-resp]
             [monger.core :as mg]
             [monger.collection :as mc]
@@ -43,10 +44,16 @@
     (ring-resp/created "the url" (mc/insert-and-return db "catalog" incoming))))
 
 
+(defhandler token-check [request]
+    (let [token (get-in request [:headers "x-catalog-token"])]
+      (if (not (= token "o brave new world"))
+        (assoc (ring-resp/response {:body "access denied"}) :status 403))))
+
+
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}
 ;; apply to / and its children (/about).
-(def common-interceptors [(body-params/body-params) http/html-body])
+(def common-interceptors [(body-params/body-params) http/html-body token-check])
 
 ;; Tabular routes
 (def routes #{["/" :get (conj common-interceptors `home-page)]
