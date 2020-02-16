@@ -2,7 +2,11 @@
   (:require [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
-            [ring.util.response :as ring-resp]))
+            [ring.util.response :as ring-resp]
+            [monger.core :as mg]
+            [monger.collection :as mc]
+            [monger.json]))
+
 
 (defn about-page
   [request]
@@ -12,7 +16,29 @@
 
 (defn home-page
   [request]
-  (ring-resp/response "Hello World less generic!"))
+  (prn request)
+  (let [uri "mongodb://aashrey:admin123@127.0.0.1:27017/sample" {:keys [conn db]}
+        (mg/connect-via-uri uri)]
+    (http/json-response (mc/find-maps db "catalog"))))
+
+
+(def grop {:first {:name "one" :age "1" :key 1}
+           :second {:name "two" :age "1" :key 1}})
+
+(defn gui-page
+  [request]
+  (http/json-response grop))
+
+(defn get-gui
+  [request]
+  (let [name (get-in request [:path-params :name])]
+    (http/json-response ((keyword name) grop))))
+
+(defn post-gui [request]
+  (prn (:json-params request))
+  (def reqb (:json-params request))
+  (ring-resp/created "http://fake-201-url" (merge grop reqb)))
+
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}
@@ -21,7 +47,12 @@
 
 ;; Tabular routes
 (def routes #{["/" :get (conj common-interceptors `home-page)]
-              ["/about" :get (conj common-interceptors `about-page)]})
+              ["/about" :get (conj common-interceptors `about-page)]
+              ["/gui" :get (conj common-interceptors `gui-page)]
+              ["/gui" :post (conj common-interceptors `post-gui)]
+              ["/gui/:name" :get (conj common-interceptors `get-gui)]})
+
+
 
 ;; Map-based routes
 ;(def routes `{"/" {:interceptors [(body-params/body-params) http/html-body]
