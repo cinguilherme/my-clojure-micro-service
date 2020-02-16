@@ -31,6 +31,14 @@
        first))
 (get-by-tag parsed :to)
 
+(defn monger-mapper [xmlstring]
+  "take a raw xml string, map a known structure into a single map"
+  (let [proj-xml (xml/parse-str xmlstring)]
+    {:proj-name (get-by-tag proj-xml :proj-name)
+     :name (get-by-tag proj-xml :name)
+     :frame-work (get-by-tag proj-xml :frame-work)
+     :language (get-by-tag proj-xml :language)
+     :repo (get-by-tag proj-xml :repo)}))
 
 
 (defn git-search [q]
@@ -41,7 +49,6 @@
 (defn git-get
   [request]
   (http/json-response (git-search (get-in request [:query-params :q]))))
-
 
 
 (defn about-page
@@ -79,6 +86,15 @@
         connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)]
     (ring-resp/created "the url" (mc/insert-and-return db "catalog" incoming))))
 
+(defn create-project-xml
+  [request]
+  (def incoming
+    (monger-mapper
+      (slurp (:body request))))
+  (let [connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)]
+    (ring-resp/created "the url" (mc/insert-and-return db "catalog" incoming))))
+
+
 
 (defhandler token-check [request]
     (let [token (get-in request [:headers "x-catalog-token"])]
@@ -98,6 +114,7 @@
               ["/projects" :get (conj common-interceptors `get-projects)]
               ["/project/:proj-name" :get (conj common-interceptors `get-project)]
               ["/project" :post (conj common-interceptors `create-project)]
+              ["/project-xml" :post (conj common-interceptors `create-project-xml)]
               ["/see-also" :get (conj common-interceptors `git-get)]})
 
 
