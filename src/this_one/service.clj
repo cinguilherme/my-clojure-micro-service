@@ -68,17 +68,18 @@
 (defn get-project
   [request]
   (http/json-response
-    (dbhelper/db-get-project (get-in request [:path-params :proj-name]))))
+    (dbhelper/db-get-project
+      (get-in request [:path-params :proj-name]))))
 
 (defn get-projects
   [request]
-  (http/json-response (dbhelper/get-all-projects)))
+  (http/json-response
+    (dbhelper/get-all-projects)))
 
 (defn create-project [request]
-  (prn (:json-params request))
-  (let [incoming (:json-params request)
-        connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)]
-    (ring-resp/created "the url" (mc/insert-and-return db "catalog" incoming))))
+  (let [incoming (:json-params request)]
+    (ring-resp/created "the url"
+                       (mc/insert-and-return (dbhelper/db) "catalog" incoming))))
 
 (defn xml-out
   [known-map]
@@ -95,8 +96,7 @@
   (def incoming
     (monger-mapper
       (slurp (:body request))))
-  (let [connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)
-        ok (mc/insert-and-return db "catalog" incoming)]
+  (let [ok (mc/insert-and-return (dbhelper/db) "catalog" incoming)]
     (-> (ring-resp/created "http to my resource" (xml/emit-str (xml-out ok)))
         (ring-resp/content-type "application/xml"))))
 
