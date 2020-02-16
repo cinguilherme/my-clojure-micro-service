@@ -12,6 +12,26 @@
             [monger.json]))
 
 
+(def sample-xml "<note>
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+</note>")
+
+(def parsed (xml/parse-str sample-xml))
+
+(:content parsed)
+
+(defn get-by-tag [map-in tname]
+  (->> map-in :content
+       (filter #(= (:tag %) tname))
+       first
+       :content
+       first))
+(get-by-tag parsed :to)
+
+
 
 (defn git-search [q]
   (let [ret (client/get
