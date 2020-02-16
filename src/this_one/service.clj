@@ -18,30 +18,29 @@
 
 (defn home-page
   [request]
-  (prn request)
+  (prn request) (http/json-response "hi"))
+
+(defn db-get-project [proj-name]
+  (let [connect-string mongo-uri
+        {:keys [conn db]} (mg/connect-via-uri connect-string)]
+    (mc/find-maps db "catalog" {:proj-name proj-name})))
+
+(defn get-project
+  [request]
+  (http/json-response
+    (db-get-project (get-in request [:path-params :proj-name]))))
+
+(defn get-projects
+  [request]
   (let [uri mongo-uri {:keys [conn db]}
         (mg/connect-via-uri uri)]
     (http/json-response (mc/find-maps db "catalog"))))
 
-
-(def grop {:first {:name "one" :age "1" :key 1}
-           :second {:name "two" :age "1" :key 1}})
-
-(defn gui-page
-  [request]
-  (http/json-response grop))
-
-(defn get-gui
-  [request]
-  (let [name (get-in request [:path-params :name])]
-    (http/json-response ((keyword name) grop))))
-
-(defn post-gui [request]
+(defn create-project [request]
   (prn (:json-params request))
   (let [incoming (:json-params request)
         connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)]
     (ring-resp/created "the url" (mc/insert-and-return db "catalog" incoming))))
-
 
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
@@ -52,9 +51,10 @@
 ;; Tabular routes
 (def routes #{["/" :get (conj common-interceptors `home-page)]
               ["/about" :get (conj common-interceptors `about-page)]
-              ["/gui" :get (conj common-interceptors `gui-page)]
-              ["/gui" :post (conj common-interceptors `post-gui)]
-              ["/gui/:name" :get (conj common-interceptors `get-gui)]})
+              ["/projects" :get (conj common-interceptors `get-projects)]
+              ["/project/:proj-name" :get (conj common-interceptors `get-project)]
+              ["/project" :post (conj common-interceptors `create-project)]})
+
 
 
 
