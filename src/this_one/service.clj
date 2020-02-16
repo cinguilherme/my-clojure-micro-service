@@ -6,9 +6,11 @@
             [clj-http.client :as client]
             [ring.util.response :as ring-resp]
             [clojure.data.json :as json]
+            [clojure.data.xml :as xml]
             [monger.core :as mg]
             [monger.collection :as mc]
             [monger.json]))
+
 
 
 (defn git-search [q]
@@ -24,9 +26,10 @@
 
 (defn about-page
   [request]
-  (ring-resp/response (format "Clojure %s - served from %s"
-                              (clojure-version)
-                              (route/url-for ::about-page))))
+  (ring-resp/response
+    (format "Clojure %s - served from %s"
+            (clojure-version)
+            (route/url-for ::about-page))))
 
 (def mongo-uri "mongodb://aashrey:admin123@127.0.0.1:27017/sample")
 

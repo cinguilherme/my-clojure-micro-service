@@ -15,6 +15,7 @@
                  [com.novemberain/monger "3.1.0"]
                  [clj-http "3.10.0"]
                  [org.clojure/data.json "0.2.7"]
+                 [org.clojure/data.xml "0.0.8"]
 
                  [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/jul-to-slf4j "1.7.26"]
