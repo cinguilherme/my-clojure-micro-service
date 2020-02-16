@@ -7,6 +7,7 @@
             [ring.util.response :as ring-resp]
             [clojure.data.json :as json]
             [clojure.data.xml :as xml]
+            [this-one.dbhelpers :as dbhelper]
             [monger.core :as mg]
             [monger.collection :as mc]
             [monger.json]))
@@ -64,21 +65,14 @@
   [request]
   (prn request) (http/json-response "hi"))
 
-(defn db-get-project [proj-name]
-  (let [connect-string mongo-uri
-        {:keys [conn db]} (mg/connect-via-uri connect-string)]
-    (mc/find-maps db "catalog" {:proj-name proj-name})))
-
 (defn get-project
   [request]
   (http/json-response
-    (db-get-project (get-in request [:path-params :proj-name]))))
+    (dbhelper/db-get-project (get-in request [:path-params :proj-name]))))
 
 (defn get-projects
   [request]
-  (let [uri mongo-uri {:keys [conn db]}
-        (mg/connect-via-uri uri)]
-    (http/json-response (mc/find-maps db "catalog"))))
+  (http/json-response (dbhelper/get-all-projects)))
 
 (defn create-project [request]
   (prn (:json-params request))
