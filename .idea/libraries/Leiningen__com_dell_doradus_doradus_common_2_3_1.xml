@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: com.dell.doradus/doradus-common:2.3.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/dell/doradus/doradus-common/2.3.1/doradus-common-2.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

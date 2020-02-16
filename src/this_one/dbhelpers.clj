@@ -15,3 +15,11 @@
 
 (defn db []
   (let [connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)] db))
+
+
+;; String s = new String()
+(.toUpperCase (String. "lili"))
+(.substring (String. "lili lili") 2 5)
+(class (String.))
+(System/getenv "MONGO")
+(.toString (doto (StringBuffer.) (.append "alex") (.append "jr") (.append "santos")))
