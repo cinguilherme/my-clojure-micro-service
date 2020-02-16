@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed898e8d-23ee-4a91-b2fa-ef2b626f75c5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__clojurewerkz_support_1_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__com_google_guava_guava_18_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__com_novemberain_monger_3_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_mongodb_bson_3_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_mongodb_mongodb_driver_3_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_mongodb_mongodb_driver_core_3_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.clj" beforeDir="false" afterPath="$PROJECT_DIR$/project.clj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/this_one/service.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/this_one/service.clj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/this-one.iml" beforeDir="false" afterPath="$PROJECT_DIR$/this-one.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +32,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
-  <component name="ReplState" timestamp="1581861047423">{:repl-history {:ide [], :local [{:command &quot;(def dev-serv (run-dev))&quot;, :offset 24, :ns &quot;this-one.server&quot;} {:command &quot;(def dev-serv (run-dev))\n&quot;, :offset 24, :ns &quot;this-one.server&quot;}], :remote []}}</component>
+  <component name="ReplState" timestamp="1581862792792">{:repl-history {:ide [], :local [{:command &quot;(def dev-serv (run-dev))&quot;, :offset 24, :ns &quot;this-one.server&quot;} {:command &quot;(def dev-serv (run-dev))\n&quot;, :offset 24, :ns &quot;this-one.server&quot;}], :remote []}}</component>
   <component name="RunManager">
     <configuration name="REPL for this-one" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false" temporary="true">
       <module name="this-one" />
@@ -99,9 +89,9 @@
       <screen x="61" y="27" width="1859" height="1053" />
     </state>
     <state x="1158" y="264" width="710" height="578" key="find.popup/61.27.1859.1053@61.27.1859.1053" timestamp="1581815005395" />
-    <state x="1104" y="259" width="816" height="678" key="search.everywhere.popup" timestamp="1581858765102">
+    <state x="1104" y="259" width="816" height="678" key="search.everywhere.popup" timestamp="1581861125098">
       <screen x="61" y="27" width="1859" height="1053" />
     </state>
-    <state x="1104" y="259" width="816" height="678" key="search.everywhere.popup/61.27.1859.1053@61.27.1859.1053" timestamp="1581858765102" />
+    <state x="1104" y="259" width="816" height="678" key="search.everywhere.popup/61.27.1859.1053@61.27.1859.1053" timestamp="1581861125098" />
   </component>
 </project>

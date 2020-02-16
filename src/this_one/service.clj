@@ -14,10 +14,12 @@
                               (clojure-version)
                               (route/url-for ::about-page))))
 
+(def mongo-uri "mongodb://aashrey:admin123@127.0.0.1:27017/sample")
+
 (defn home-page
   [request]
   (prn request)
-  (let [uri "mongodb://aashrey:admin123@127.0.0.1:27017/sample" {:keys [conn db]}
+  (let [uri mongo-uri {:keys [conn db]}
         (mg/connect-via-uri uri)]
     (http/json-response (mc/find-maps db "catalog"))))
 
@@ -36,8 +38,10 @@
 
 (defn post-gui [request]
   (prn (:json-params request))
-  (def reqb (:json-params request))
-  (ring-resp/created "http://fake-201-url" (merge grop reqb)))
+  (let [incoming (:json-params request)
+        connect-string mongo-uri {:keys [conn db]} (mg/connect-via-uri connect-string)]
+    (ring-resp/created "the url" (mc/insert-and-return db "catalog" incoming))))
+
 
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
