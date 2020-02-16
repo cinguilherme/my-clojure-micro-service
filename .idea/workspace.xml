@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectId" id="1XrrHnXfWNj92M7KOfKmcvXrq5e" />
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+      <setting name="replType" value="NREPL" />
+      <setting name="execution" value="LEININGEN" />
+      <setting name="jvmArgs" value="" />
+      <setting name="parameters" value="" />
+      <setting name="workingDir" value="" />
+      <setting name="profiles" value="" />
+      <setting name="aliases" value="" />
+      <setting name="fixLineNumbers" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false">
+      <setting name="host" value="" />
+      <setting name="port" value="0" />
+      <setting name="replType" value="SOCKET" />
+      <setting name="configType" value="SPECIFY" />
+      <setting name="fixLineNumbers" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1158" y="264" width="710" height="578" key="find.popup" timestamp="1581815005395">
+      <screen x="61" y="27" width="1859" height="1053" />
+    </state>
+    <state x="1158" y="264" width="710" height="578" key="find.popup/61.27.1859.1053@61.27.1859.1053" timestamp="1581815005395" />
+    <state x="1104" y="259" width="816" height="678" key="search.everywhere.popup" timestamp="1581815013776">
+      <screen x="61" y="27" width="1859" height="1053" />
+    </state>
+    <state x="1104" y="259" width="816" height="678" key="search.everywhere.popup/61.27.1859.1053@61.27.1859.1053" timestamp="1581815013776" />
+  </component>
+</project>
